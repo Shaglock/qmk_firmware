@@ -14,3 +14,9 @@ Keymap changes from the default keymap are:
 # TODO: delay?
 # TODO: remove page up/down home end
 # TODO: add delete
+# TODO: add tap dance
+
+# TODO: investigate http://www.keyboard-layout-editor.com and convert to qmk
+# TODO: investigate macros https://github.com/qmk/qmk_configurator/issues/1042
+https://docs.qmk.fm/#/feature_advanced_keycodes?id=shift-backspace-for-delete
+https://fsymbols.com/draw/

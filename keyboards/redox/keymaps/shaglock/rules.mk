@@ -25,8 +25,9 @@
 # AUDIO_SUPPORTED = no
 # BACKLIGHT_SUPPORTED = no
 
-
-VIA_ENABLE = yes
+# VIA doesnt support 5th dynamic layer so kinda useless for me
+# https://github.com/the-via/keyboards/issues/632#issuecomment-802120297
+# VIA_ENABLE = yes
 # link time optimization. This will cause the final step to take longer, but should get you a smaller compiled size. This also disables Action Functions, and Action Macros, both of which are deprecated.
 LTO_ENABLE = yes
 
