@@ -13,13 +13,65 @@ enum layer_names {
     _MEDIA
 };
 
+enum custom_keycodes {
+    PSWD = SAFE_RANGE,
+    SHAGLOCK,
+    GMAIL,
+    GMAIL2,
+    MAILRU,
+    MAILRU2
+};
+
 #define SYM_E       LT(_SYMBOL, KC_E)
 #define NAV_I       LT(_NAV, KC_I)
 #define C_ESC       LCTL_T(KC_ESC)
 #define ADJ_EN      LT(_ADJUST, KC_END)
-#define ADJ_PU      LT(_ADJUST, KC_PGUP)
+#define MEDIA_PU    LT(_MEDIA, KC_PGUP)
 #define MEDIA_TG    TG(_MEDIA)
 #define NAV_TG      TG(_NAV)
+
+
+// MACROS
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+    case PSWD:
+        if (record->event.pressed) {
+            SEND_STRING("159357Shaglock@!");
+        }
+        break;
+
+    case SHAGLOCK:
+        if (record->event.pressed) {
+            SEND_STRING("shaglock");
+        }
+        break;
+
+    case GMAIL:
+        if (record->event.pressed) {
+           SEND_STRING("goldilb10xa@gmail.com");
+        }
+        break;
+
+    case GMAIL2:
+        if (record->event.pressed) {
+           SEND_STRING("shaplyko.ilya@gmail.com");
+        }
+        break;
+
+    case MAILRU:
+        if (record->event.pressed) {
+           SEND_STRING("goldilb10xa@mail.ru");
+        }
+        break;
+
+    case MAILRU2:
+        if (record->event.pressed) {
+           SEND_STRING("shaglock@mail.ru");
+        }
+        break;
+    }
+    return true;
+};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    /* QWERTY
@@ -31,10 +83,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * | ESC/⌃|   A  |   S  |   D  |   F  |   G  |       |                    |       |   H  |   J  |   K  |   L  |   ;  |  '   |
    * |------+------+------+------+------+------|   [   |                    |   ]   |------+------+------+------+------+------|
    * |Shift⇧|   Z  |   X  |   C  |   V  |   B  '----------------,  ,----------------'   N  |   M  |   ,  |   .  |   /  |Shift⇧|
-   * |-----------------------------------------/ADJ/PgUp/ PgDn /    \  Home \  End  \-----------------------------------------|
+   * |-----------------------------------------/MED/PgUp/ PgDn /    \  Home \  End  \-----------------------------------------|
    * | Ctrl⌃| Opt⌥ |  <-  |  ->  |    /      /-------/-------/      \-------\-------\  Opt⌥ \    | Down |  Up  | Opt⌥ |MEDIA |
    * |      |      |      |      |   /   ⌘   / Space / Back  /        \       \       \       \   |      |      |      |      |
-   * `---------------------------'  '-------/       / Space /          \ Enter \  Tab  \-------'  '---------------------------'
+   * `---------------------------'  '-------/       / Space /          \ Enter \  Del  \-------'  '---------------------------'
    *                                        '--------------'            '--------------'
    */
   [_QWERTY] = LAYOUT(
@@ -45,9 +97,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //├────────┼────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┼────────┤
        C_ESC   ,KC_A    ,KC_S    ,KC_D    ,KC_F    ,KC_G    ,KC_LBRC ,                          KC_RBRC ,KC_H    ,KC_J    ,KC_K    ,KC_L    ,KC_SCLN ,KC_QUOT ,
     //├────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┐       ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-       KC_LSFT ,KC_Z    ,KC_X    ,KC_C    ,KC_V    ,KC_B    ,ADJ_PU  ,KC_PGDN ,        KC_HOME ,ADJ_EN  ,KC_N    ,KC_M    ,KC_COMM ,KC_DOT  ,KC_SLSH ,KC_RSFT ,
+       KC_LSFT ,KC_Z    ,KC_X    ,KC_C    ,KC_V    ,KC_B    ,MEDIA_PU,KC_PGDN ,        KC_HOME ,ADJ_EN  ,KC_N    ,KC_M    ,KC_COMM ,KC_DOT  ,KC_SLSH ,KC_RSFT ,
     //├────────┼────────┼────────┼────────┼────┬───┴────┬───┼────────┼────────┤       ├────────┼────────┼───┬────┴───┬────┼────────┼────────┼────────┼────────┤
-       KC_LCTL ,KC_LALT ,KC_LEFT ,KC_RGHT ,     KC_LGUI ,    KC_SPC  ,KC_BSPC ,        KC_ENT  ,KC_TAB  ,    KC_LALT ,     KC_DOWN ,KC_UP   ,KC_LALT ,MEDIA_TG
+       KC_LCTL ,KC_LALT ,KC_LEFT ,KC_RGHT ,     KC_LGUI ,    KC_SPC  ,KC_BSPC ,        KC_ENT  ,KC_DEL  ,    KC_LALT ,     KC_DOWN ,KC_UP   ,KC_LALT ,MEDIA_TG
     //└────────┴────────┴────────┴────────┘    └────────┘   └────────┴────────┘       └────────┴────────┘   └────────┘    └────────┴────────┴────────┴────────┘
 
   ),
@@ -88,7 +140,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                          XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┐       ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,_______ ,XXXXXXX ,        XXXXXXX ,_______ ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,        XXXXXXX ,_______ ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
   //├────────┼────────┼────────┼────────┼────┬───┴────┬───┼────────┼────────┤       ├────────┼────────┼───┬────┴───┬────┼────────┼────────┼────────┼────────┤
      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,     XXXXXXX ,    RGB_VAD ,RGB_VAI ,        RGB_HUD ,RGB_HUI ,    XXXXXXX ,     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX
   //└────────┴────────┴────────┴────────┘    └────────┘   └────────┴────────┘       └────────┴────────┘   └────────┘    └────────┴────────┴────────┴────────┘
@@ -98,11 +150,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                                           ┌────────┬────────┬────────┬────────┬────────┬────────┐
      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                                            XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐                         ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                          XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,MAILRU  ,MAILRU2 ,XXXXXXX ,                          XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                          XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+     XXXXXXX ,XXXXXXX ,SHAGLOCK,XXXXXXX ,PSWD    ,GMAIL   ,XXXXXXX ,                          XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┐       ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,KC_MUTE ,KC_MUTE ,        KC_MUTE ,KC_MUTE ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,GMAIL2  ,_______ ,KC_MUTE ,        KC_MUTE ,KC_MUTE ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
   //├────────┼────────┼────────┼────────┼────┬───┴────┬───┼────────┼────────┤       ├────────┼────────┼───┬────┴───┬────┼────────┼────────┼────────┼────────┤
      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,     KC_MPLY ,    KC_VOLD ,KC_VOLU ,        KC_MPRV ,KC_MNXT ,    KC_MPLY ,     XXXXXXX ,XXXXXXX ,XXXXXXX ,_______
   //└────────┴────────┴────────┴────────┘    └────────┘   └────────┴────────┘       └────────┴────────┘   └────────┘    └────────┴────────┴────────┴────────┘
